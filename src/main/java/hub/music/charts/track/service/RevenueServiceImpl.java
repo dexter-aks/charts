@@ -34,10 +34,10 @@ public class RevenueServiceImpl implements RevenueService{
                 while((line = br.readLine()) != null) {
                     if(!line.contains(header)) {
                         Track track = TrackUtil.mapToTrack(line);
-                        double amount = track.getRevenue();
+                        double amount = track.getTotalAmount();
                         if(tracks.size() == limit) {
                             tracks.sort(new TrackComparator());
-                            double currMin = tracks.get(limit -1).getRevenue();
+                            double currMin = tracks.get(limit -1).getTotalAmount();
                             if(amount > currMin) {
                                 tracks.remove(limit-1);
                                 tracks.add(track);

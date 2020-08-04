@@ -5,14 +5,16 @@ public class Track {
     private final String isrc;
     private final String trackName;
     private final String artistName;
-    private final double revenue;
+    private final double totalAmount;
+    private final String currency;
 
-    public Track(String isrc, String trackName, String artistName, double revenue) {
+    public Track(String isrc, String trackName, String artistName, double totalAmount) {
         super();
         this.isrc = isrc;
         this.trackName = trackName;
         this.artistName = artistName;
-        this.revenue = revenue;
+        this.totalAmount = totalAmount;
+        currency = "EURO";
     }
 
     public String getIsrc() {
@@ -27,16 +29,18 @@ public class Track {
         return artistName;
     }
 
-    public double getRevenue() {
-        return revenue;
+    public double getTotalAmount() {
+        return totalAmount;
     }
+
+    public String getCurrency() {return currency; }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
         long temp;
-        temp = Double.doubleToLongBits(revenue);
+        temp = Double.doubleToLongBits(totalAmount);
         result = prime * result + (int) (temp ^ (temp >>> 32));
         result = prime * result + ((artistName == null) ? 0 : artistName.hashCode());
         result = prime * result + ((isrc == null) ? 0 : isrc.hashCode());
@@ -53,7 +57,7 @@ public class Track {
         if (getClass() != obj.getClass())
             return false;
         Track other = (Track) obj;
-        if (Double.doubleToLongBits(revenue) != Double.doubleToLongBits(other.revenue))
+        if (Double.doubleToLongBits(totalAmount) != Double.doubleToLongBits(other.totalAmount))
             return false;
         if (artistName == null) {
             if (other.artistName != null)
@@ -72,7 +76,7 @@ public class Track {
 
     @Override
     public String toString() {
-        return "Track [isrc=" + isrc + ", trackName=" + trackName + ", artistName=" + artistName + ", revenue=" + revenue
+        return "Track [isrc=" + isrc + ", trackName=" + trackName + ", artistName=" + artistName + ", revenue=" + totalAmount
                 + "]\n";
     }
 }
