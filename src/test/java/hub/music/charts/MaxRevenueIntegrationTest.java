@@ -25,7 +25,7 @@ public class MaxRevenueIntegrationTest {
 
     @Test
     public void successfullyGetMaxRevenueTracks() throws Exception {
-        String content = "[{\"isrc\":\"G853C3770233\",\"trackName\":\"Let's Talk About Love\",\"artistName\":\"Primal Scream\",\"revenue\":5.550000000000001},{\"isrc\":\"W9P94183IN00\",\"trackName\":\"The Eminem Show\",\"artistName\":\"Fats Domino\",\"revenue\":4.641},{\"isrc\":\"6635NZ24S04O\",\"trackName\":\"Happy Nation\",\"artistName\":\"Madonna\",\"revenue\":4.44},{\"isrc\":\"17FJ32050304\",\"trackName\":\"...Baby One More Time\",\"artistName\":\"Joy Division\",\"revenue\":3.8674999999999997},{\"isrc\":\"6495T70XV5S6\",\"trackName\":\"X&Y\",\"artistName\":\"Pete Townshend\",\"revenue\":3.8674999999999997}]";
+        String content = "[{\"isrc\":\"G853C3770233\",\"trackName\":\"Let's Talk About Love\",\"artistName\":\"Primal Scream\",\"totalAmount\":5.550000000000001,\"currency\":\"EURO\"},{\"isrc\":\"W9P94183IN00\",\"trackName\":\"The Eminem Show\",\"artistName\":\"Fats Domino\",\"totalAmount\":4.641,\"currency\":\"EURO\"},{\"isrc\":\"6635NZ24S04O\",\"trackName\":\"Happy Nation\",\"artistName\":\"Madonna\",\"totalAmount\":4.44,\"currency\":\"EURO\"},{\"isrc\":\"17FJ32050304\",\"trackName\":\"...Baby One More Time\",\"artistName\":\"Joy Division\",\"totalAmount\":3.8674999999999997,\"currency\":\"EURO\"},{\"isrc\":\"6495T70XV5S6\",\"trackName\":\"X&Y\",\"artistName\":\"Pete Townshend\",\"totalAmount\":3.8674999999999997,\"currency\":\"EURO\"}]";
         this.mockMvc.perform(MockMvcRequestBuilders
                 .get("/tracks/revenue/max?limit=5"))
                 .andExpect(status().is2xxSuccessful())
