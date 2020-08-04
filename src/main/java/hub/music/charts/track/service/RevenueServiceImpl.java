@@ -1,7 +1,9 @@
 package hub.music.charts.track.service;
 
+import hub.music.charts.track.configuration.TrackFiles;
 import hub.music.charts.track.model.Track;
 import hub.music.charts.track.model.TrackComparator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -12,24 +14,19 @@ import java.util.List;
 @Service
 public class RevenueServiceImpl implements RevenueService{
 
-    @Value("classpath:dsp_streaming_report_us.csv")
-    private File usCharts;
-
-    @Value("classpath:dsp_streaming_report_uk.csv")
-    private File ukCharts;
-
     @Value("${track.header}")
     private String header;
+
+    @Autowired
+    private TrackFiles trackFiles;
 
     @Override
     public List<Track> getMaxRevenueTracks(int limit) {
         List<Track> tracks = new ArrayList<>();
         try {
-            List<File> files = new ArrayList<>();
-            files.add(usCharts);
-            files.add(ukCharts);
-            for(File file: files) {
+            List<File> files = trackFiles.getFiles();
 
+            for(File file: files) {
                 InputStream is = new FileInputStream(file);
                 BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
@@ -37,10 +34,10 @@ public class RevenueServiceImpl implements RevenueService{
                 while((line = br.readLine()) != null) {
                     if(!line.contains(header)) {
                         Track track = TrackUtil.mapToTrack(line);
-                        double amount = track.getRevenue();
+                        double amount = track.getTotalAmount();
                         if(tracks.size() == limit) {
                             tracks.sort(new TrackComparator());
-                            double currMin = tracks.get(limit -1).getRevenue();
+                            double currMin = tracks.get(limit -1).getTotalAmount();
                             if(amount > currMin) {
                                 tracks.remove(limit-1);
                                 tracks.add(track);
