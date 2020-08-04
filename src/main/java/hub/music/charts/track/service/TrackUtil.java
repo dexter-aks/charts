@@ -11,9 +11,9 @@ public class TrackUtil {
 
     private static double getTotalEuroAmount(int units, double amount, String currency) {
 
-        if(currency.equalsIgnoreCase("USD")) {
+        if("USD".equalsIgnoreCase(currency)) {
             return units * amount * 0.85;
-        }else if(currency.equalsIgnoreCase("GBP")) {
+        }else if("GBP".equalsIgnoreCase(currency)) {
             return units * amount * 1.11;
         }else {
             return units * amount;
