@@ -1,6 +1,5 @@
 package hub.music.charts.track.service;
 
-import hub.music.charts.track.configuration.TrackFiles;
 import hub.music.charts.track.model.Track;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,14 +27,14 @@ public class RevenueServiceImplTest {
     private RevenueService revenueService;
 
     @MockBean
-    private TrackFiles trackFiles;
+    private FileServiceImpl fileServiceImpl;
 
     @Test
     public void successfullyGetTop5MaxRevenueTracks(){
         int limit = 5;
         List<Track> expected = getTracks();
 
-        when(trackFiles.getFiles()).thenReturn(getFiles());
+        when(fileServiceImpl.getChartFiles()).thenReturn(getFiles());
 
         List<Track> actual = revenueService.getMaxRevenueTracks(limit);
         assertEquals(expected.size(), actual.size());
