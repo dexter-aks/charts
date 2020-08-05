@@ -1,6 +1,5 @@
 package hub.music.charts.track.service;
 
-import hub.music.charts.track.configuration.TrackFiles;
 import hub.music.charts.track.model.Track;
 import hub.music.charts.track.model.TrackComparator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +17,13 @@ public class RevenueServiceImpl implements RevenueService{
     private String header;
 
     @Autowired
-    private TrackFiles trackFiles;
+    private FileService fileService;
 
     @Override
     public List<Track> getMaxRevenueTracks(int limit) {
         List<Track> tracks = new ArrayList<>();
         try {
-            List<File> files = trackFiles.getFiles();
+            List<File> files = fileService.getFiles();
 
             for(File file: files) {
                 InputStream is = new FileInputStream(file);
