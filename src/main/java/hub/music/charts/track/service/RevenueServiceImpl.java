@@ -23,13 +23,16 @@ public class RevenueServiceImpl implements RevenueService {
 
         if (limit <= 0) throw new InvalidLimitException();
 
+        InputStream inputStream = null;
+        BufferedReader bufferedReader = null;
+
         List<Track> tracks = new ArrayList<>();
         try {
             List<File> files = dataFiles.getFiles();
 
             for (File file : files) {
-                InputStream inputStream = new FileInputStream(file);
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                inputStream = new FileInputStream(file);
+                bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
                 bufferedReader.lines().skip(1)
                         .map(TrackUtil::mapToTrack)
                         .forEach(track -> {
@@ -45,15 +48,23 @@ public class RevenueServiceImpl implements RevenueService {
                                 tracks.add(track);
                             }
                         });
-
-                bufferedReader.close();
-                inputStream.close();
             }
-            if (!tracks.isEmpty() && tracks.size() < limit) throw new LimitBoundException();
+            if (!tracks.isEmpty() && (tracks.size() < limit)) throw new LimitBoundException();
 
         } catch (IOException ioException) {
-            System.out.println("Exception:" + ioException);
+            System.out.println("Exception:" + ioException.getMessage());
+        } finally {
+            close(inputStream, bufferedReader);
         }
         return tracks;
+    }
+
+    public void close(InputStream inputStream, BufferedReader bufferedReader) {
+        try {
+            if (bufferedReader != null) bufferedReader.close();
+            if (inputStream != null) inputStream.close();
+        } catch (IOException e) {
+            System.out.println("Exception while closing the resources" + e.getMessage());
+        }
     }
 }
