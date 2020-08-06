@@ -17,11 +17,15 @@ public class Currency {
     @Value("#{${currencies}}")
     private Map<String, Double> currencies;
 
-    public static Map<String, Double> exchangeRate;
+    private static Map<String, Double> rates;
 
     @PostConstruct
     public void loadCurrency(){
-        exchangeRate = new HashMap<>();
-        exchangeRate.putAll(currencies);
+        rates = new HashMap<>();
+        rates.putAll(currencies);
+    }
+
+    public static double getRate(String currency){
+        return rates.get(currency);
     }
 }

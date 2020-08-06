@@ -1,6 +1,5 @@
 package hub.music.charts.track.service;
 
-import hub.music.charts.track.configuration.Currency;
 import hub.music.charts.track.configuration.DataFiles;
 import hub.music.charts.track.exception.InvalidLimitException;
 import hub.music.charts.track.exception.LimitBoundException;
