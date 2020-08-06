@@ -5,9 +5,7 @@ import hub.music.charts.track.exception.LimitBoundException;
 import hub.music.charts.track.model.Track;
 import hub.music.charts.track.model.TrackComparator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpServerErrorException;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -54,7 +52,6 @@ public class RevenueServiceImpl implements RevenueService {
 
         } catch (IOException ioException) {
             System.out.println("Exception:" + ioException);
-            throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return tracks;
     }
