@@ -28,9 +28,9 @@ public class RevenueServiceImpl implements RevenueService {
             List<File> files = dataFiles.getFiles();
 
             for (File file : files) {
-                InputStream is = new FileInputStream(file);
-                BufferedReader br = new BufferedReader(new InputStreamReader(is));
-                br.lines().skip(1)
+                InputStream inputStream = new FileInputStream(file);
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                bufferedReader.lines().skip(1)
                         .map(TrackUtil::mapToTrack)
                         .forEach(track -> {
                             double amount = track.getTotalAmount();
@@ -46,8 +46,8 @@ public class RevenueServiceImpl implements RevenueService {
                             }
                         });
 
-                br.close();
-                is.close();
+                bufferedReader.close();
+                inputStream.close();
             }
             if (!tracks.isEmpty() && tracks.size() < limit) throw new LimitBoundException();
 
