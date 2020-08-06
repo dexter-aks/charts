@@ -1,5 +1,7 @@
 package hub.music.charts.track.service;
 
+import hub.music.charts.track.configuration.Currency;
+import hub.music.charts.track.configuration.DataFiles;
 import hub.music.charts.track.exception.InvalidLimitException;
 import hub.music.charts.track.exception.LimitBoundException;
 import hub.music.charts.track.model.Track;
@@ -15,7 +17,7 @@ import java.util.List;
 public class RevenueServiceImpl implements RevenueService {
 
     @Autowired
-    private FileService fileService;
+    private DataFiles dataFiles;
 
     @Override
     public List<Track> getMaxRevenueTracks(int limit) throws InvalidLimitException, LimitBoundException {
@@ -24,7 +26,7 @@ public class RevenueServiceImpl implements RevenueService {
 
         List<Track> tracks = new ArrayList<>();
         try {
-            List<File> files = fileService.getFiles();
+            List<File> files = dataFiles.getFiles();
 
             for (File file : files) {
                 InputStream is = new FileInputStream(file);

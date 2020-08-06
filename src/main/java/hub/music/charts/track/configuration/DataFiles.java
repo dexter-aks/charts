@@ -1,14 +1,14 @@
-package hub.music.charts.track.service;
+package hub.music.charts.track.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
-public class FileServiceImpl implements FileService{
+@Component
+public class DataFiles {
 
     @Value("classpath:dsp_streaming_report_us.csv")
     private File usCharts;
