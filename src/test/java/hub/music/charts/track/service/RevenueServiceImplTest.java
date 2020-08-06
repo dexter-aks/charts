@@ -1,5 +1,7 @@
 package hub.music.charts.track.service;
 
+import hub.music.charts.track.exception.InvalidLimitException;
+import hub.music.charts.track.exception.LimitBoundException;
 import hub.music.charts.track.model.Track;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @WebMvcTest(value = RevenueService.class)
@@ -30,7 +33,7 @@ public class RevenueServiceImplTest {
     private FileService fileService;
 
     @Test
-    public void successfullyGetTop5MaxRevenueTracks(){
+    public void successfullyGetTop5MaxRevenueTracks() throws InvalidLimitException, LimitBoundException {
         int limit = 5;
         List<Track> expected = getTracks();
 
@@ -38,6 +41,28 @@ public class RevenueServiceImplTest {
 
         List<Track> actual = revenueService.getMaxRevenueTracks(limit);
         assertEquals(expected.size(), actual.size());
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void throwInvalidLimitExceptionIfLimitIsZero() throws InvalidLimitException, LimitBoundException {
+        int limit = 0;
+        when(fileService.getFiles()).thenReturn(getFiles());
+
+        assertThrows(InvalidLimitException.class, () -> {
+            revenueService.getMaxRevenueTracks(limit);
+        });
+
+    }
+
+    @Test
+    public void throwLimitBoundExceptionIfLimitIsGreaterThanDataSet() throws InvalidLimitException, LimitBoundException{
+        int limit = 100;
+        when(fileService.getFiles()).thenReturn(getFiles());
+
+        assertThrows(LimitBoundException.class, () -> {
+            revenueService.getMaxRevenueTracks(limit);
+        });
     }
 
     private List<File> getFiles(){
