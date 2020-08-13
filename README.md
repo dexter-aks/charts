@@ -11,6 +11,10 @@ gradle clean build
 Get TOP Tracks with highest revenue, number of top rows is contolled by user
 /tracks/revenue/max?limit=<>
 
+### Assumptions
+1. Total Amount = Units * Amount * currencyToEuroRate
+2. CSV files are valid
+
 ### Approach
 Steps
 1. Read the file line by line as stream 
@@ -19,6 +23,10 @@ Steps
 3. If new track grossing amount is greater than min(grossing list),
    remove min grossing track from list and add new track to list
 4 Repeat
+
+### Extension 
+1. More test case can be added
+2. Design change is applicable
 
 ### Pros
 It can handle sorting of large file size as complete data 

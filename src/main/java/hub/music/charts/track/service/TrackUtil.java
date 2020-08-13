@@ -1,22 +1,14 @@
 package hub.music.charts.track.service;
 
+import hub.music.charts.track.configuration.Currency;
 import hub.music.charts.track.model.Track;
 
 public class TrackUtil {
 
     public static Track mapToTrack(String line) {
-        String[] p = line.split(";");
-        return new Track(p[0], p[1], p[2], getTotalEuroAmount(Integer.parseInt(p[3]), Double.parseDouble(p[4]), p[5]));
-    }
-
-    private static double getTotalEuroAmount(int units, double amount, String currency) {
-
-        if("USD".equalsIgnoreCase(currency)) {
-            return units * amount * 0.85;
-        }else if("GBP".equalsIgnoreCase(currency)) {
-            return units * amount * 1.11;
-        }else {
-            return units * amount;
-        }
+        String[] fields = line.split(";");
+        double rate = Currency.getRate(fields[5]);
+        double totalAmount = Integer.parseInt(fields[3]) * Double.parseDouble(fields[4]) * rate ;
+        return new Track(fields[0], fields[1], fields[2], totalAmount);
     }
 }
